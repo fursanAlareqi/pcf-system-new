@@ -1,0 +1,144 @@
+<?php 
+
+$date= date('Y-m-d');
+$user=$_SESSION['user']['id'];
+$sql="SELECT * FROM individual_sessions where date BETWEEN ? and ?     ";	
+$stmu=$con->prepare($sql); 
+$stmu->execute(array($from_date,$to_date));
+//عدد الحالات الكلية
+if($stmu->rowCount()>0){
+?>
+    <table id="multi-filter-select" class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4" >
+        <center>
+        <button id="export" class="btn btn-success">Export to excel</button>
+        </center>
+        <thead>
+            <tr>
+            <th>اسم الموظف</th>
+            <th >نوع التسجيل</th>
+            <th >الفرع</th>
+            <th> العمر</th>
+            <th> الجنس</th>
+            <th> رقم كود الحالة</th>
+            <th> الجلسة</th>
+            <th> عنوان الجلسة</th>
+            <th> الزمن من</th>
+            <th> الزمن الى</th>
+            <th> تحديد المشكلة</th>
+            <th> أجرات الجلسة</th>
+            <th> الاساليب العلاجية</th>
+            <th> المهام والواجبات</th>
+            <th> الاختبارات النفسية</th>
+            
+            
+            <th >التاريخ</th>
+            <th>تعديل</th>
+                
+                
+            
+                
+            </tr>
+        </thead>
+        <tfoot>
+            <th>اسم الموظف</th>
+            <th >نوع التسجيل</th>
+            <th >الفرع</th>
+            <th> العمر</th>
+            <th> الجنس</th>
+            <th> رقم كود الحالة</th>
+            <th> الجلسة</th>
+            <th> عنوان الجلسة</th>
+            <th> الزمن من</th>
+            <th> الزمن الى</th>
+            <th> تحديد المشكلة</th>
+            <th> أجرات الجلسة</th>
+            <th> الاساليب العلاجية</th>
+            <th> المهام والواجبات</th>
+            <th> الاختبارات النفسية</th>
+            <th >التاريخ</th>
+            <th>تعديل</th>
+        </tfoot>
+        <tbody>
+            <?php
+
+            {
+                foreach($stmu->fetchAll() as $row) 
+                        {
+                        
+                        ?>
+
+                        <tr>
+                            <td>
+                                <?php 
+                                $sql="select * from user where  id=? ";
+                                $stm=$con->prepare($sql); 
+                                $stm->execute(array($row['sender_name']));
+                                $name=$stm->fetch();
+                                $sender_name=$name['name'];
+                                echo $sender_name;
+                                ?>
+                            </td>
+                            <td><?php echo $row['type'];?></td>
+
+                            <td>
+                                <?php 
+                                $sql="select * from branch where  id=? ";
+                                $stm=$con->prepare($sql); 
+                                $stm->execute(array($row['branch']));
+                                $branch=$stm->fetch();
+                                $branch_name=$branch['branch_name'];
+                                echo $branch_name;
+                                ?>
+                            </td>
+                            <td>
+                                <?php
+                                    if($_SESSION['user']['rule_id']==16){
+                                        $sql="SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM hotline where code =?  and type=?    ";
+                                    }
+                                    else{
+                                        $sql="SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM resption where code =?  and type=?    ";
+                                    }
+                    
+                                $stmu=$con->prepare($sql); 
+                                $stmu->execute(array($row['code'],'جديد'));
+                                $row_brithday_sex=$stmu->fetch();
+                                echo $row_brithday_sex['age']; ?>
+                            </td>
+                            <td><?php echo $row_brithday_sex['sex']?></td>
+                            <td><?php echo $row['code'];?></td>
+                            <td><?php echo $row['section'];?></td>
+                            <td><?php echo $row['address'];?></td>
+                            <td><?php echo $row['from_time'];?></td>
+                            <td><?php echo $row['to_time'];?></td>
+                            <td><?php echo $row['select_s'];?></td>
+                            <td><?php echo $row['agrat'];?></td>
+                            <td><?php echo $row['alasalib'];?></td>
+                            <td><?php echo $row['taks'];?></td>
+                        
+                            <td><?php echo $row['violense'];?></td>
+                            <td><?php echo $row['date'];?></td>
+                            <td>
+                    <a href="individual_sessions_edit.php?action=edit&ids=<?php echo $row['id'] ?>" >  
+                        <i class="fa fa-pencil"></i>تعديل
+                    </a>
+                </td>
+
+                            
+                        
+                        </tr>
+                        <?php
+                                
+                        
+                    }		
+                }	
+            }
+            else{
+                echo' <div class="alert alert-danger">NO Row</div>';
+            }
+            
+                
+                ?>
+            
+            
+        </tbody>
+    </table>

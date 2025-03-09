@@ -1,0 +1,308 @@
+<?php
+
+if (isset($_POST['submit'])) {
+
+	$sname=$_SESSION['user']['id'];
+	$branch=$_SESSION['user']['branch_id'];  
+	$a=0;
+	$L=0;
+	$res1=$_POST["res1"];
+	$res2=$_POST["res2"];
+	$res3=$_POST["res3"];
+	$res4=$_POST["res4"];
+	$res5=$_POST["res5"];
+	$res6=$_POST["res6"];
+	$res7=$_POST["res7"];
+	$res8=$_POST["res8"];
+	$res9=$_POST["res9"];
+	$res10=$_POST["res10"];
+	$res11=$_POST["res11"];
+    $res12=$_POST["res12"];
+    $res13=$_POST["res13"];
+    $res14=$_POST["res14"];
+    $res15=$_POST["res15"];
+    $res16=$_POST["res16"];
+    $res17=$_POST["res17"];
+    $res18=$_POST["res18"];
+    $res19=$_POST["res19"];
+    $res20=$_POST["res20"];
+    $res21=$_POST["res21"];
+    $res22=$_POST["res22"];
+    $res23=$_POST["res23"];
+    $res24=$_POST["res24"];
+    $res25=$_POST["res25"];
+    $res26=$_POST["res26"];
+    $res27=$_POST["res27"];
+    $res28=$_POST["res28"];
+    $res29=$_POST["res29"];
+    $res30=$_POST["res30"];
+    $res31=$_POST["res31"];
+    $res32=$_POST["res32"];
+    $res33=$_POST["res33"];
+    $res34=$_POST["res34"];
+    $res35=$_POST["res35"];
+    $res36=$_POST["res36"];
+    $res37=$_POST["res37"];
+    $res38=$_POST["res38"];
+    $res39=$_POST["res39"];
+    $res40=$_POST["res40"];
+    $res41=$_POST["res41"];
+    $res42=$_POST["res42"];
+    $res43=$_POST["res43"];
+    $res44=$_POST["res44"];
+    $res45=$_POST["res45"];
+    $res46=$_POST["res46"];
+    $res47=$_POST["res47"];
+    $res48=$_POST["res48"];
+    $res49=$_POST["res49"];
+    $res50=$_POST["res50"];
+	$res51=$_POST["res51"];
+	$res52=$_POST["res52"];
+	$res53=$_POST["res53"];
+	$res54=$_POST["res54"];
+	$res55=$_POST["res55"];
+	$res56=$_POST["res56"];
+	$res57=$_POST["res57"];
+	
+	$x=0;
+
+	
+	if($res1=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+	if($res2=="1"){
+		$x=$x+1;	
+	}
+	if($res3=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+	if($res4=="1"){
+		$x=$x+1;	
+	}
+	if($res5=="2"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+	if($res6=="1"){
+		$L=$L+1;
+		$x=$x+1;	
+	}
+	if($res7=="1"){
+		$x=$x+1;	
+	}
+	if($res8=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+	if($res9=="1"){
+		$x=$x+1;	
+	}
+	if($res10=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+	if($res11=="1"){
+		$x=$x+1;	
+	}
+    if($res12=="12"){
+		$x=$x+1;
+		$L=$L+1;	
+	}
+    if($res13=="1"){
+		$x=$x+1;	
+		$a=$a+1;
+	}
+    if($res14=="1"){
+		$x=$x+1;	
+	}
+    if($res15=="2"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res16=="1"){
+		$x=$x+1;	
+	}
+    if($res17=="2"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res18=="2"){
+		$x=$x+1;
+		$L=$L+1;	
+	}
+    if($res19=="1"){
+		$x=$x+1;	
+	}
+    if($res20=="2"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res21=="1"){
+		$x=$x+1;	
+	}
+    if($res22=="1"){
+		$x=$x+1;	
+		$a=$a+1;
+	}
+    if($res23=="1"){
+		$x=$x+1;	
+	}
+    if($res24=="1"){
+		$x=$x+1;
+		$L=$L+1;	
+	}
+    if($res25=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res26=="1"){
+		$x=$x+1;	
+	}
+    if($res27=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res28=="1"){
+		$x=$x+1;	
+	}
+    if($res29=="2"){
+		$x=$x+1;	
+		$a=$a+1;
+	}
+    if($res30=="2"){
+		$x=$x+1;
+		$L=$L+1;	
+	}
+
+    if($res31=="1"){
+		$x=$x+1;	
+	}
+    if($res32=="2"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res33=="1"){
+		$x=$x+1;	
+	}
+    if($res34=="2"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res35=="1"){
+		$x=$x+1;	
+	}
+    if($res36=="1"){
+		$x=$x+1;
+		$L=$L+1;	
+	}
+    if($res37=="2"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res38=="1"){
+		$x=$x+1;	
+	}
+    if($res39=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res40=="1"){
+		$x=$x+1;	
+	}
+    if($res41=="2"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res42=="2"){
+		$x=$x+1;
+		$L=$L+1;	
+	}
+    if($res43=="1"){
+		$x=$x+1;	
+	}
+
+    if($res44=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res45=="1"){
+		$x=$x+1;	
+	}
+    if($res46=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res47=="1"){
+		$x=$x+1;	
+	}
+    if($res48=="2"){
+		$x=$x+1;
+		$L=$L+1;	
+	}
+    if($res49=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+    if($res50=="1"){
+		$x=$x+1;	
+	}
+	if($res51=="2"){
+		$x=$x+1;	
+		$a=$a+1;
+	}
+	if($res52=="1"){
+		$x=$x+1;	
+	}
+	if($res53=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+	if($res54=="2"){
+		$x=$x+1;
+		$L=$L+1;	
+	}
+	if($res55=="1"){
+		$x=$x+1;	
+	}
+	if($res56=="1"){
+		$x=$x+1;
+		$a=$a+1;	
+	}
+	if($res57=="1"){
+		$x=$x+1;	
+	}
+	
+
+if($x>=16){
+	$y="يعاني من قلق و إجهاد نفسي";
+}
+else if($x<16){
+	$y=" لايعاني من قلق و إجهاد نفسي ";
+}
+if($a<8){
+	$r="الحالة انطواية ";
+}
+else if($a>=8){
+	$r=" طبيعي";
+}
+
+if($L>4){
+	$z="يوجد مصداقية ";
+}
+else if($L<=4){
+	$z=" لا يوجد مصداقية ";
+}
+
+    $name=$_POST["name"];
+    
+
+	
+	$sql="INSERT INTO ezenk_exam(exam_marke,exam,antoa,laier,names,branch,sname) VALUES ('$x','$y','$r','$z','$name','$branch','$sname')";
+	mysqli_query($con,$sql);
+    $extra="../";
+    echo "<script>window.location.href='".$extra."'</script>";
+
+}
+?>

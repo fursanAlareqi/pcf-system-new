@@ -1,0 +1,2 @@
+[24-Jul-2024 05:18:48 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'u377775348_pcf'@'localhost' (using password: YES) in /home/pcfyemen/public_html/pcf-system/exam/dbconnection.php on line 6
+[24-Jul-2024 05:19:23 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'u377775348_pcf'@'localhost' (using password: YES) in /home/pcfyemen/public_html/pcf-system/exam/dbconnection.php on line 6

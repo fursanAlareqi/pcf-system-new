@@ -1,0 +1,10 @@
+[26-Jun-2024 17:54:17 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'u377775348_pcf'@'localhost' (using password: YES) in /home/pcfyemen/public_html/pcf-system/exam/dbconnection.php on line 6
+[01-Jul-2024 09:30:13 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'u377775348_pcf'@'localhost' (using password: YES) in /home/pcfyemen/public_html/pcf-system/exam/dbconnection.php on line 6
+[01-Jul-2024 09:50:47 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'u377775348_pcf'@'localhost' (using password: YES) in /home/pcfyemen/public_html/pcf-system/exam/dbconnection.php on line 6
+[01-Jul-2024 09:50:47 UTC] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, bool given in /home/pcfyemen/public_html/pcf-system/exam/quize2/form.php on line 231
+[01-Jul-2024 11:21:53 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'u377775348_pcf'@'localhost' (using password: YES) in /home/pcfyemen/public_html/pcf-system/exam/dbconnection.php on line 6
+[01-Jul-2024 11:28:22 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'u377775348_pcf'@'localhost' (using password: YES) in /home/pcfyemen/public_html/pcf-system/exam/dbconnection.php on line 6
+[01-Jul-2024 11:28:22 UTC] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, bool given in /home/pcfyemen/public_html/pcf-system/exam/quize2/form.php on line 231
+[14-Jul-2024 07:26:23 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'u377775348_pcf'@'localhost' (using password: YES) in /home/pcfyemen/public_html/pcf-system/exam/dbconnection.php on line 6
+[14-Jul-2024 07:40:27 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'u377775348_pcf'@'localhost' (using password: YES) in /home/pcfyemen/public_html/pcf-system/exam/dbconnection.php on line 6
+[14-Jul-2024 07:40:27 UTC] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, bool given in /home/pcfyemen/public_html/pcf-system/exam/quize2/form.php on line 231
