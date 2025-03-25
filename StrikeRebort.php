@@ -92,7 +92,8 @@ if(!isset($_SESSION['user'])){
 											
 												//end find branch 
 
-												$sql="SELECT *,TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age FROM resption where (date BETWEEN ? and ?) and branch=? and project like ?   ";	
+												$sql="SELECT *,YEAR(CURDATE()) - YEAR(brithday) - 
+															(DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age FROM resption where (date BETWEEN ? and ?) and branch=? and project like ?   ";	
 												$stmu=$con->prepare($sql); 
 												$stmu->execute(array($from_date,$to_date,'6','%مشروع الاستجابة الطارئة لإنقاض امراض الصرع%'));
 												//عدد الحالات الكلية

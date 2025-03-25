@@ -199,15 +199,16 @@ if ($_SESSION['user']['rule_id'] == 7 || $_SESSION['user']['rule_id'] == 15 || $
 																	?>
 																</td>
 																<td>
-																	<?php
-																	$sql = "SELECT brithday ,sex FROM resption where code =?  and type=?    ";
-																	$stmu = $con->prepare($sql);
-																	$stmu->execute(array($row['code'], 'جديد'));
-																	$row_brithday_sex = $stmu->fetch();
-																	$c = date('Y');
-																	$y = date('Y', strtotime($row_brithday_sex['brithday']));
-																	$age = $c - $y;
-																	echo $age; ?>
+																<?php
+																$sql = "SELECT 
+																	YEAR(CURDATE()) - YEAR(brithday) - 
+																	(DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age ,sex
+																FROM resption
+																WHERE code = ? AND type = ?    ";
+																$stmu = $con->prepare($sql);
+																$stmu->execute(array($row['code'], 'جديد'));
+																$row_brithday_sex = $stmu->fetch();
+																echo $row_brithday_sex['age']; ?>
 																</td>
 																<td><?php echo $row_brithday_sex['sex'] ?></td>
 																<td><?php echo $row['code']; ?></td>

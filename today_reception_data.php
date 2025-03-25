@@ -170,7 +170,11 @@ if ($_SESSION['user']['rule_id'] == 3 || $_SESSION['user']['rule_id'] == 2 || $_
 															</td>
 															<td>
 																<?php
-																$sql = "SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM resption where code =?  and type=?    ";
+																$sql = "SELECT 
+																	YEAR(CURDATE()) - YEAR(brithday) - 
+																	(DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age ,sex
+																FROM resption
+																WHERE code = ? AND type = ?    ";
 																$stmu = $con->prepare($sql);
 																$stmu->execute(array($row['code'], 'جديد'));
 																$row_brithday_sex = $stmu->fetch();
@@ -210,13 +214,9 @@ if ($_SESSION['user']['rule_id'] == 3 || $_SESSION['user']['rule_id'] == 2 || $_
 																</a>
 
 															</td>
-															<?php
-															$c = date('Y');
-															$y = date('Y', strtotime($row['brithday']));
-															$age = $c - $y;
-															?>
+															
 
-															<td><a href="?action=print&code=<?php echo $row['code'] ?>&date=<?php echo $row['date'] ?>&name=<?php echo $row['name'] ?>&ticket=<?php echo $row['ticket_number'] ?>&age=<?php echo $age ?>&phone=<?php echo $row['phone'] ?>">
+															<td><a href="?action=print&code=<?php echo $row['code'] ?>&date=<?php echo $row['date'] ?>&name=<?php echo $row['name'] ?>&ticket=<?php echo $row['ticket_number'] ?>&age=<?php echo $row_brithday_sex['age'] ?>&phone=<?php echo $row['phone'] ?>">
 																	طباعة
 																</a></td>
 

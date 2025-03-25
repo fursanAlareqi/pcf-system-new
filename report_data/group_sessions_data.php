@@ -1,9 +1,17 @@
 <?php
 $date= date('Y-m-d');
 $user=$_SESSION['user']['id'];
-$sql="SELECT * FROM group_sessions  where date BETWEEN ? and ?     ";	
-$stmu=$con->prepare($sql); 
-$stmu->execute(array($from_date,$to_date));
+if($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){
+    $sql="SELECT * FROM group_sessions  where date BETWEEN ? and ?      ";	
+    $stmu=$con->prepare($sql); 
+    $stmu->execute(array($from_date,$to_date));
+}
+else{
+    $branch=$_SESSION['user']['branch_id'];
+    $sql="SELECT * FROM group_sessions  where date BETWEEN ? and ?   and  branch=?   ";	
+    $stmu=$con->prepare($sql); 
+    $stmu->execute(array($from_date,$to_date,$branch));
+}
 //عدد الحالات الكلية
 if($stmu->rowCount()>0){
 ?>

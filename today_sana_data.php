@@ -12,6 +12,8 @@ if ($_SESSION['user']['rule_id'] == 23 || $_SESSION['user']['rule_id'] == 22 || 
 
 	<?php
 	include_once "include/query.php";
+	include_once "include/table_actions.php";
+	delete($con, 'sana')
 
 	?>
 
@@ -62,7 +64,7 @@ if ($_SESSION['user']['rule_id'] == 23 || $_SESSION['user']['rule_id'] == 22 || 
 													<th> الجهة المحال منها(وارد)</th>
 													<th> نوع الاحاله(صادر)</th>
 													<th> الجهة المحال اليها(صادر)</th>
-													<!-- <th>تعديل</th> -->
+													<th>تعديل</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -85,7 +87,7 @@ if ($_SESSION['user']['rule_id'] == 23 || $_SESSION['user']['rule_id'] == 22 || 
 												<th> الجهة المحال اليها(صادر)</th>
 
 
-												<!-- <th>تعديل</th> -->
+												<th>تعديل</th>
 
 											</tfoot>
 											<tbody>
@@ -108,9 +110,13 @@ if ($_SESSION['user']['rule_id'] == 23 || $_SESSION['user']['rule_id'] == 22 || 
 															</td>
 															<td>
 																<?php
-																$sql = "SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM resption where code =?  and type=?    ";
+																$sql = "SELECT 
+																			YEAR(CURDATE()) - YEAR(brithday) - 
+																			(DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age ,sex
+																		FROM sana
+																		WHERE id = ?    ";
 																$stmu = $con->prepare($sql);
-																$stmu->execute(array($row['code'], 'جديد'));
+																$stmu->execute(array($row['id']));
 																$row_brithday_sex = $stmu->fetch();
 																echo $row_brithday_sex['age']; ?>
 															</td>
@@ -129,11 +135,13 @@ if ($_SESSION['user']['rule_id'] == 23 || $_SESSION['user']['rule_id'] == 22 || 
 															<td><?php echo $row['type_con_to']; ?></td>
 															<td><?php echo $row['side_con_to']; ?></td>
 
-															<!-- <td>
-                                                                    <a href="resption_edit.php?action=edit&ids=<?php echo $row['id'] ?>" >  
+															<td>
+                                                                    <a href="sana_edit.php?action=edit&ids=<?php echo $row['id'] ?>" >  
                                                                         تعديل
                                                                     </a>
-													            </td> -->
+													            </td>
+																<?php
+															deleteAction($row['id']) ?>
 														</tr>
 											<?php
 

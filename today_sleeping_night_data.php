@@ -120,7 +120,11 @@ if ($_SESSION['user']['rule_id'] == 8 || $_SESSION['user']['rule_id'] == 2 || $_
 															<td><?php echo $row['code']; ?></td>
 															<td>
 																<?php
-																$sql = "SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM resption where code =?  and type=?    ";
+																$sql = "SELECT 
+    YEAR(CURDATE()) - YEAR(brithday) - 
+    (DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age ,sex
+FROM resption
+WHERE code = ? AND type = ?    ";
 																$stmu = $con->prepare($sql);
 																$stmu->execute(array($row['code'], 'جديد'));
 																$row_brithday_sex = $stmu->fetch();

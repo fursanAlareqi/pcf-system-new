@@ -53,7 +53,7 @@ if(!isset($_SESSION['user'])){
                                        
                                         
 										<select class="selectpicker form-control"  name="report_type" id="tokens"  data-live-search="true" required >
-										<?php  if($_SESSION['user']['rule_id']==2 ||$_SESSION['user']['rule_id']==6 ||$_SESSION['user']['rule_id']==24  ){ ?>
+										<?php  if($_SESSION['user']['rule_id']==2 ||$_SESSION['user']['rule_id']==6 ||$_SESSION['user']['rule_id']==24   ||$_SESSION['user']['rule_id']==22 ||$_SESSION['user']['rule_id']==23 ){ ?>
 											<option value=""></option>
 											<option value="1">الاستقبال</option>
 											<option value="2"> ادارة الحالة</option>

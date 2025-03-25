@@ -1,18 +1,30 @@
  <?php 
  $date= date('Y-m-d');
  $user=$_SESSION['user']['id'];
- $sql="SELECT * FROM consult_his_psychology  where date BETWEEN ? and ?      ";	
- $stmu=$con->prepare($sql); 
- $stmu->execute(array($from_date,$to_date));
+
+ if($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){
+    $sql="SELECT * FROM consult_his_psychology  where date BETWEEN ? and ?      ";	
+    $stmu=$con->prepare($sql); 
+    $stmu->execute(array($from_date,$to_date));
+}
+else{
+    $branch=$_SESSION['user']['branch_id'];
+    $sql="SELECT * FROM consult_his_psychology  where date BETWEEN ? and ?   and  branch=?   ";	
+    $stmu=$con->prepare($sql); 
+    $stmu->execute(array($from_date,$to_date,$branch));
+}
+
  //عدد الحالات الكلية
  if($stmu->rowCount()>0){
  
  ?>
 
     <table id="multi-filter-select" class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4" >
-          <center>
-        <button id="export" class="btn btn-success">Export to excel</button>
-        </center>
+            <center>
+                <?php if($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){ ?>
+                    <button id="export" class="btn btn-success">Export to excel</button>
+                <?php } ?>     
+            </center>
         <thead>
             <tr>
             <th>اسم الموظف</th>
@@ -87,7 +99,11 @@
                                         $sql="SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM hotline where code =?  and type=?    ";
                                     }
                                     else{
-                                        $sql="SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM resption where code =?  and type=?    ";
+                                        $sql="SELECT 
+                                                YEAR(CURDATE()) - YEAR(brithday) - 
+                                                (DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age ,sex
+                                            FROM resption
+                                            WHERE code = ? AND type = ?    ";
                                     }
                                 $stmu=$con->prepare($sql); 
                                 $stmu->execute(array($row['code'],'جديد'));

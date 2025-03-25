@@ -52,10 +52,19 @@ if ($_SESSION['user']['rule_id'] == 3 || $_SESSION['user']['rule_id'] == 2 || $_
 															<label>رقم الهاتف</label>
 															<input type="tel" value="<?php echo $row['phone']; ?>" class="form-control input-border-bottom" id="inputFloatingLabel" name="phone" pattern="[7]{1}[7,1,3,0,8]{1}[0-9]{7}" required>
 														</div>
-														<div class="form-group form-floating-label">
-															<label>تاريخ الميلاد</label>
-															<input type="date" value="<?php echo $row['brithday']; ?>" class="form-control input-border-bottom" id="inputFloatingLabel" name="brithday" required>
-														</div>
+														<?php if($row['type'] == "جديد"){?>
+															<div class="form-group form-floating-label">
+																<label>تاريخ الميلاد</label>
+																	<?php if($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){?>
+
+																	<input type="date" value="<?php echo $row['brithday']; ?>" class="form-control input-border-bottom" id="inputFloatingLabel" name="brithday" required>
+																<?php }else {?>
+																	<input type="date" value="<?php echo $row['brithday']; ?>" disabled class="form-control input-border-bottom" id="inputFloatingLabel" required>
+																<?php }?>
+
+															</div>
+														<?php }?>
+
 														<div class="form-group form-floating-label">
 															<label>الجنس</label>
 															<select class="selectpicker form-control" id="tokens ddd" data-live-search="true" name="sex" required>
@@ -500,38 +509,14 @@ if ($_SESSION['user']['rule_id'] == 3 || $_SESSION['user']['rule_id'] == 2 || $_
 					}
 				},
 			});</script>';
-		} elseif (empty($brithday)) {
-
-
-			echo '<script>swal("يرجاء ادخال  تاريخ ميلاد الحاله ", "لم يتم رفع البيانات", {
-				icon : "warning",
-				buttons: {        			
-					confirm: {
-						className : "btn btn-warning"
-					}
-				},
-			});</script>';
-		} elseif ($age < 5) {
-
-
-			echo '<script>swal("العمر اقل من 5 سنين يرجاء مراجعة تاريخ الميلاد", "لم يتم رفع البيانات", {
-				icon : "warning",
-				buttons: {        			
-					confirm: {
-						className : "btn btn-warning"
-					}
-				},
-			});</script>';
-		}
-
+		} 
 
 		/////////////////////////////////////////////////////////////////////////////////////تذكير الشرط حق الايميل
 
 		//اذا لايوجد اي مشكلة يقوم بارسال الملف
 		else {
 
-
-			$query = "UPDATE  resption set branch=?,name=?,brithday=?,date=?,
+			if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){$query = "UPDATE  resption set branch=?,name=?,brithday=?,date=?,
 				phone=?,brithday_blace=?,sex=?,
 				place=?,social_status=?,department=?,isolation=?,villag=?,briefness=?,
 				  becouse_come=?,date_come=?,studing=?,identity=?,
@@ -575,7 +560,54 @@ if ($_SESSION['user']['rule_id'] == 3 || $_SESSION['user']['rule_id'] == 2 || $_
 				$Disability,
 				$project,
 				$id
+			));}
+			else{
+				$query = "UPDATE  resption set branch=?,name=?,date=?,
+				phone=?,brithday_blace=?,sex=?,
+				place=?,social_status=?,department=?,isolation=?,villag=?,briefness=?,
+				  becouse_come=?,date_come=?,studing=?,identity=?,
+				   identity_number=?,identity_place=?,laying=?,brother=?,work=?,
+					son=?,daughter=?,number_of_wife=?,age_when_married=?,
+					sister=?,know_our=?,sender_name=?,view=?,plasce_from_come=?,Disability=?,project=? where id=?
+				 ";
+			$stm = $con->prepare($query);
+			$stm->execute(array(
+				$branch,
+				$name,
+				$date,
+				$phone,
+				$brithday_blace,
+				$sex,
+				$place,
+				$social_status,
+				$department,
+				$isolation,
+				$villag,
+				$briefness,
+				$becouse_come,
+				$date_come,
+				$studing,
+				$identity,
+				$identity_number,
+				$identity_place,
+				$laying,
+				$brother,
+				$work,
+				$son,
+				$daughter,
+				$number_of_wife,
+				$age_when_married,
+				$sister,
+				$know_our,
+				$user,
+				$view,
+				$plasce_from_come,
+				$Disability,
+				$project,
+				$id
 			));
+			}
+			
 			if ($stm->rowCount()) {
 				echo '<script src="js/send_success.js"></script>';
 				echo "<script>

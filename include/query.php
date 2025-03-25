@@ -11,11 +11,17 @@ function queryWithPagination(
     $table,
     $showToAll = false,
     $query = null,
-    $additional_where = null
+    $additional_where = null,
+    
+    
 ) {
     // global $total_results, $total_pages, $per_page;
+    if (isset($_GET['search']) ) {
+        $search = $_GET['search'];
 
-    $search = $_GET['search'];
+    }else{
+        $search= null;
+    }
 
     if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6 || $showToAll) {
 
@@ -254,4 +260,122 @@ function appendDeteleActionTableHeader()
 
     });
     </script>";
+}
+function queryOfReportData(
+    $con,
+    $table,
+    $showToAll = false,
+    $query = null,
+    $additional_where = null,
+    
+    
+) {
+    // global $total_results, $total_pages, $per_page;
+    if (isset($_GET['search']) ) {
+        $search = $_GET['search'];
+
+    }else{
+        $search= null;
+    }
+
+    if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6 || $showToAll) {
+
+        if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
+            exportJs();
+            return export($con, $table);
+        }
+
+        $sql = 'SELECT COUNT(*) FROM ' . $table;
+
+        if ($search) {
+            $sql .= " where code = $search";
+        }
+
+        if ($additional_where) {
+            if (strpos($sql, 'where') === false) {
+                $sql .= " where  " . $additional_where;
+            } else {
+                $sql .= " and  " . $additional_where;
+            }
+        }
+
+        $stmt = $con->query($sql);
+
+        if ($stmt) {
+            $total_results = $stmt->fetchColumn();
+        }
+
+        $per_page = 10;
+
+        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+
+        $total_pages = ceil($total_results / $per_page);
+
+        $starting_limit = ($page - 1) * $per_page;
+
+        // $date = date('Y-1-1');
+
+        $sql = "SELECT * FROM " . $table;
+
+        if ($search) {
+            $sql .= " where code = $search";
+        }
+
+
+
+
+        if ($showToAll) {
+            if (strpos($sql, 'where') !== false) {
+                $sql .= " and branch " . $_SESSION['user']['branch'];
+            } else {
+                $sql .= " where branch " . $_SESSION['user']['branch'];
+            }
+        }
+
+
+        //
+
+
+
+
+        $sql .= " order by id desc  LIMIT :limit OFFSET :offset";
+
+        if ($query) {
+            $sql = $query($sql);
+        }
+        //
+
+
+        $stmu = $con->prepare($sql);
+
+        $stmu->bindParam(':limit', $per_page, PDO::PARAM_INT);
+        $stmu->bindParam(':offset', $starting_limit, PDO::PARAM_INT);
+
+        $stmu->execute();
+
+        // if ($showToAll == false) {
+        //append search to table
+        echo ' <script src="assets/js/add_search_table.js"></script>';
+        // }
+    } else {
+        $date = date('Y-m-1');
+
+        $user = $_SESSION['user']['id'];
+        $sql = "SELECT * FROM " . $table . " where sender_name =? and Date(date_data_come)>=? ";
+
+        if ($search) {
+            $sql .= " and code = $search";
+        }
+
+
+        $stmu = $con->prepare($sql);
+        $stmu->execute(array($user, $date));
+        $total_results = $stmu->rowCount();
+    }
+
+
+
+
+
+    return $stmu;
 }
