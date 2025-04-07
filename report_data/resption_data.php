@@ -18,19 +18,32 @@
 //         }
 
 // }
+
 $date= date('Y-m-d');
 $user=$_SESSION['user']['id'];
-$sql="SELECT * FROM resption where date BETWEEN ? and ?   ";	
-$stmu=$con->prepare($sql); 
-$stmu->execute(array($from_date,$to_date));
+if($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){
+    $sql="SELECT * FROM resption where date BETWEEN ? and ?   ";	
+    $stmu=$con->prepare($sql); 
+    $stmu->execute(array($from_date,$to_date));
+}
+else{
+    $branch=$_SESSION['user']['branch_id'];
+    $sql="SELECT * FROM resption where date BETWEEN ? and ?   and  branch=?  ";	
+    $stmu=$con->prepare($sql); 
+    $stmu->execute(array($from_date,$to_date,$branch));
+}
+
 //عدد الحالات الكلية
 if($stmu->rowCount()>0){
 ?>
 
     <table id="multi-filter-select" class="table table-bordered table-head-bg-info " >
             <center>
-        <button id="export" class="btn btn-success">Export to excel</button>
-        </center>
+                <?php if($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){ ?>
+                <button id="export" class="btn btn-success">Export to excel</button>
+                <?php } ?>
+                
+            </center>
         <br>
         <thead>
             <tr>
@@ -147,9 +160,13 @@ if($stmu->rowCount()>0){
                             </td>
                             <td>
                                 <?php
-                                $sql="SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM resption where code =?  and type=?    ";	
+                                $sql="SELECT 
+                                        YEAR(CURDATE()) - YEAR(brithday) - 
+                                        (DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age ,sex
+                                    FROM resption
+                                    WHERE id = ?  ";	
                                 $stmu=$con->prepare($sql); 
-                                $stmu->execute(array($row['code'],'جديد'));
+                                $stmu->execute(array($row['id']));
                                 $row_brithday_sex=$stmu->fetch();
                                 echo $row_brithday_sex['age']; ?>
                             </td>

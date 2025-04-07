@@ -24,7 +24,8 @@
     <tbody>
         <?php
 
-            $sql="SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age,code,sex,briefness,date,place,know_our,sender_name FROM resption r join user u on u.id=r.sender_name  where  date between ? and ? and u.type=? ";	
+            $sql="SELECTYEAR(CURDATE()) - YEAR(brithday) - 
+															(DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age,code,sex,briefness,date,place,know_our,sender_name FROM resption r join user u on u.id=r.sender_name  where  date between ? and ? and u.type=? ";	
             $stm=$con->prepare($sql); 
             $stm->execute(array($from_date,$to_date,'مكتب'));
             //عدد الحالات الكلية

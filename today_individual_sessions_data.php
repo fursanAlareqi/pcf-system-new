@@ -135,7 +135,11 @@ if ($_SESSION['user']['rule_id'] == 7 || $_SESSION['user']['rule_id'] == 15 || $
 																if ($_SESSION['user']['rule_id'] == 16) {
 																	$sql = "SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM hotline where code =?  and type=?    ";
 																} else {
-																	$sql = "SELECT TIMESTAMPDIFF(YEAR,brithday,CURDATE()) as age ,sex FROM resption where code =?  and type=?    ";
+																	$sql = "SELECT 
+    YEAR(CURDATE()) - YEAR(brithday) - 
+    (DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age ,sex
+FROM resption
+WHERE code = ? AND type = ?    ";
 																}
 
 																$stmu = $con->prepare($sql);

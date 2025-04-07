@@ -157,35 +157,14 @@ if(!isset($_SESSION['user'])){
                                                     <div class="form-group form-floating-label">
                                                         <label >جهة الاحالة  وارد </label>
                                                         <select class="selectpicker form-control"  id="tokens ddd"  data-live-search="true" name="side_con_from"  >
-                                                            <option ></option>
-                                                            <option  >مؤسسة الرعاية النفسية التنموية - الخط الساخن</option>
-                                                            <option  >مركز الدعم النفسي - إب</option>
-                                                            <option >مركز الدعم النفسي - تعز</option>
-                                                            <option >مركز الدعم النفسي - عدن</option>
-                                                            <option >المساحة الامنة - العدين</option>
-                                                            <option >المساحة الامنة - القفر</option>
-                                                            <option >المساحة الامنة - الظهار</option>
-                                                            <option >المساحة الامنة - ذي السفال</option>
-                                                            <option >مؤسسة ديم</option>
-                                                            <option >المركز المجتمعي للنازحين</option>
-                                                            <option >منظمة أطباء بلا حدود</option>
-                                                            <option >الشؤون الاجتماعية</option>
-                                                            <option >منظمة الهجرة الدولية</option>
-                                                            <option >CARE منظمة كير</option>
-                                                            <option >دار الايواء اتحاد نساء اليمن - فرع اب</option>
-                                                            <option >سبل العيش اتحاد نساء اليمن - فرع اب</option>
-                                                            <option >منظمة انترسوس</option>
-                                                            <option >وزارة الصحة والاسكان - تعز</option>
-                                                            <option >اتحاد نساء اليمن - تعز</option>
-                                                            <option  >مواطنة لحقوق الانسان</option>
-                                                            <option >مؤسسة رسالتي للتنمية</option>		
-                                                            <option >مكتب الصحة اب</option>	
-                                                            <option >  مركز السويدي الدولي</option>	
-                                                            <option >  مؤسسة الخدمة الاجتماعية</option>
-                                                            <option >  مؤسسة تواصل للتنمية</option>
-                                                            <option >مركز المراة الامنه</option>
-                                                            <option >   منظمة الطفل والشباب </option>	
-                                                            <option >  +cm  </option>
+															<?php
+																$sql = "SELECT * FROM mange_convert_ex_side";
+																$stm = $con->query($sql);
+																foreach ($stm->fetchAll() as $row) {
+																?>
+																	<option> <?php echo $row['name'] ?></option>
+
+															<?php } ?>
 
                                                         </select>	
                                                     </div>
@@ -201,34 +180,14 @@ if(!isset($_SESSION['user'])){
                                                         <label >جهة الاحالة  صادرة </label>
                                                         <select class="selectpicker form-control"  id="tokens ddd"  data-live-search="true" name="side_con_to"  >
                                                             <option ></option>
-                                                            <option  >مؤسسة الرعاية النفسية التنموية - الخط الساخن</option>
-                                                            <option  >مركز الدعم النفسي - إب</option>
-                                                            <option >مركز الدعم النفسي - تعز</option>
-                                                            <option >مركز الدعم النفسي - عدن</option>
-                                                            <option >المساحة الامنة - العدين</option>
-                                                            <option >المساحة الامنة - القفر</option>
-                                                            <option >المساحة الامنة - الظهار</option>
-                                                            <option >المساحة الامنة - ذي السفال</option>
-                                                            <option >مؤسسة ديم</option>
-                                                            <option >المركز المجتمعي للنازحين</option>
-                                                            <option >منظمة أطباء بلا حدود</option>
-                                                            <option >الشؤون الاجتماعية</option>
-                                                            <option >منظمة الهجرة الدولية</option>
-                                                            <option >CARE منظمة كير</option>
-                                                            <option >دار الايواء اتحاد نساء اليمن - فرع اب</option>
-                                                            <option >سبل العيش اتحاد نساء اليمن - فرع اب</option>
-                                                            <option >منظمة انترسوس</option>
-                                                            <option >وزارة الصحة والاسكان - تعز</option>
-                                                            <option >اتحاد نساء اليمن - تعز</option>
-                                                            <option  >مواطنة لحقوق الانسان</option>
-                                                            <option >مؤسسة رسالتي للتنمية</option>		
-                                                            <option >مكتب الصحة اب</option>	
-                                                            <option >  مركز السويدي الدولي</option>	
-                                                            <option >  مؤسسة الخدمة الاجتماعية</option>
-                                                            <option >  مؤسسة تواصل للتنمية</option>
-                                                            <option >مركز المراة الامنه</option>
-                                                            <option >   منظمة الطفل والشباب </option>	
-                                                            <option >  +cm  </option>
+															<?php
+																$sql = "SELECT * FROM mange_convert_ex_side";
+																$stm = $con->query($sql);
+																foreach ($stm->fetchAll() as $row) {
+																?>
+																	<option> <?php echo $row['name'] ?></option>
+
+															<?php } ?>
                                                         </select>    
                                                     </div>
                                                 </div>

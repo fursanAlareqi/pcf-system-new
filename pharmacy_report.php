@@ -47,8 +47,8 @@ if ($_SESSION['user']['rule_id'] == 11 || $_SESSION['user']['rule_id'] == 2 || $
 
 
 								<form action="" method="post">
-									<div claas='row'>
-										<div class="col-md-6 col-lg-4">
+									<div class='row'>
+										<div class="col-md-6 col-lg-6">
 
 
 
@@ -59,7 +59,7 @@ if ($_SESSION['user']['rule_id'] == 11 || $_SESSION['user']['rule_id'] == 2 || $
 
 
 										</div>
-										<div class="col-md-6 col-lg-4">
+										<div class="col-md-6 col-lg-6">
 
 											<div class="form-group form-floating-label">
 												<label>الى تاريخ</label>
@@ -100,9 +100,18 @@ if ($_SESSION['user']['rule_id'] == 11 || $_SESSION['user']['rule_id'] == 2 || $
 
 									$date = date('Y-m-d');
 									$user = $_SESSION['user']['id'];
-									$sql = "SELECT * FROM pharmacy where (date<=? and date <= ?)  and residual>? and branch=? and date >= ? ORDER BY `pharmacy`.`name` ASC  ";
-									$stm = $con->prepare($sql);
-									$stm->execute(array($from_date, $to_date, 0, $branch, '2023/1/1'));
+									if($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){
+										$sql = "SELECT * FROM pharmacy where (date<=? and date <= ?)  and residual>?  and date >= ? ORDER BY `pharmacy`.`name` ASC  ";
+										$stm = $con->prepare($sql);
+										$stm->execute(array($from_date, $to_date, 0, '2023/1/1'));
+
+									}else{
+										$sql = "SELECT * FROM pharmacy where (date<=? and date <= ?)  and residual>? and branch=? and date >= ? ORDER BY `pharmacy`.`name` ASC  ";
+										$stm = $con->prepare($sql);
+										$stm->execute(array($from_date, $to_date, 0, $branch, '2023/1/1'));
+
+									}
+									
 									//عدد الحالات الكلية
 									if ($stm->rowCount() > 0) {
 
@@ -129,6 +138,12 @@ if ($_SESSION['user']['rule_id'] == 11 || $_SESSION['user']['rule_id'] == 2 || $
 														<th>حبة / شريط</th>
 														<th>المصدر</th>
 														<th>تاريخ ادخال الصنف</th>
+														<?php 
+															if($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){
+																echo "<th>الفرع</th>" ;
+															}
+
+														?>
 													</tr>
 												</thead>
 
@@ -167,6 +182,20 @@ if ($_SESSION['user']['rule_id'] == 11 || $_SESSION['user']['rule_id'] == 2 || $
 															<td> <?php echo $row['type'] == 'old' ? 'شريط' : 'حبة' ?> </td>
 															<td><?php echo $row['exporter'] ?></td>
 															<td><?php echo $row['date'] ?></td>
+															<?php 
+															
+															if($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){
+																$sql = "select * from branch where  id=? ";
+																$stm = $con->prepare($sql);
+																$stm->execute(array($row['branch']));
+																$branch = $stm->fetch();
+																$branch_name = $branch['branch_name'];
+																 echo"<td>" ;
+																 echo $branch_name;
+																 echo"</td>";
+															}
+
+														?>
 
 
 
