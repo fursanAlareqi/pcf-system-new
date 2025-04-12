@@ -130,10 +130,10 @@ if ($_SESSION['user']['rule_id'] == 16 || $_SESSION['user']['rule_id'] == 4 || $
 															<td>
 																<?php
 																$sql = "SELECT 
-    YEAR(CURDATE()) - YEAR(brithday) - 
-    (DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age ,sex
-FROM resption
-WHERE code = ? AND type = ?    ";
+																	YEAR(CURDATE()) - YEAR(brithday) - 
+																	(DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age ,sex
+																FROM resption
+																WHERE code = ? AND type = ?    ";
 																$stmu = $con->prepare($sql);
 																$stmu->execute(array($row['code'], 'جديد'));
 																$row_brithday_sex = $stmu->fetch();
