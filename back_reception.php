@@ -890,9 +890,17 @@ if ($_SESSION['user']['rule_id'] == 3 || $_SESSION['user']['rule_id'] == 2 || $_
 		//end find branch 
 
 		// age must be more than 5 year
-		$c = date('Y');
-		$y = date('Y', strtotime($brithday));
-		$age = $c - $y;
+		$sql = "SELECT 
+			YEAR(CURDATE()) - YEAR(brithday) - 
+			(DATE_FORMAT(CURDATE(), '%m-%d') < DATE_FORMAT(brithday, '%m-%d')) AS age, sex
+		FROM resption
+		WHERE code = ? AND type = ?";
+
+		$stmu = $con->prepare($sql);
+		$stmu->execute(array($code, 'جديد'));
+		$row_brithday_sex = $stmu->fetch();
+
+		$age = $row_brithday_sex['age']; 
 		//end
 
 		$sql = "select count(*) as num  from resption where  date=? and branch=?  ";

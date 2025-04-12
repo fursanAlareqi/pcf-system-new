@@ -730,9 +730,9 @@ if ($_SESSION['user']['rule_id'] == 3 || $_SESSION['user']['rule_id'] == 2 || $_
 		$f_sex = 0;
 
 		// age must be more than 5 year
-		$c = date('Y');
-		$y = date('Y', strtotime($brithday));
-		$age = $c - $y;
+		$today = new DateTime();
+		$birthDate = new DateTime($brithday);
+		$age = $today->diff($birthDate)->y;
 		//end
 
 		$user = $_SESSION['user']['id'];
