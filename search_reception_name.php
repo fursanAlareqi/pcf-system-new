@@ -136,7 +136,7 @@ if(!isset($_SESSION['user'])){
 												$stmu=$con->prepare($sql); 
 												$stmu->execute(array("%$name%",$branch));
 												//عدد الحالات الكلية
-												if($stm->rowCount()>0)
+												if($stmu->rowCount()>0)
 												{
 													foreach($stmu->fetchAll() as $row) 
 															{

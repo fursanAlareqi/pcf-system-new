@@ -894,12 +894,25 @@ date_default_timezone_set('Asia/Aden');
                         <span class="sub-item">اضافة حاله عودة</span>
                       </a>
                     </li>
+                    <li <?php if ($num == 4 && $id == 119) echo 'class="active"' ?>>
+                      <a href="search_sanaa_code.php?num=4&id=119">
+                        <span class="sub-item"> البحث بالكود</span>
+
+                      </a>
+                    </li>
+                    <li <?php if ($num == 5 && $id == 119) echo 'class="active"' ?>>
+                      <a href="search_sanaa_name.php?num=5&id=119">
+                        <span class="sub-item"> البحث بالاسم</span>
+
+                      </a>
+                    </li>
                     <li <?php if ($num == 3 && $id == 119) echo 'class="active"' ?>>
                       <a href="today_sana_data.php?num=3&id=119">
                         <span class="sub-item"> البيانات المدخله لليوم</span>
 
                       </a>
                     </li>
+                    
 
 
                   </ul>

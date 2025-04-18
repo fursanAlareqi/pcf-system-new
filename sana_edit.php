@@ -472,7 +472,7 @@ if (!isset($_SESSION['user'])) {
 			if ($stm->rowCount()) {
 				echo '<script src="js/send_success.js"></script>';
 				echo "<script>
-                                  window.open('today_sana_data.php?num=5&id=1','_self')
+                                  window.open('today_sana_data.php?num=3&id=119','_self')
                             </script>";
 			} else {
 				echo '<script src="js/send_error.js"></script>';
