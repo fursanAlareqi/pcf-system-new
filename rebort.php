@@ -48,11 +48,11 @@ if(!isset($_SESSION['user'])){
                                                     <option value="6">جهة الاحالة</option>
                                                     <option value="7">GBV/non GBV </option>
                                                     <option value="8">معاينة</option>
-                                                    <?php } if($_SESSION['user']['rule_id']==19 ||$_SESSION['user']['rule_id']==6 || $_SESSION['user']['id'] == 134){?>
+                                                    <?php } if($_SESSION['user']['rule_id']==19 ||$_SESSION['user']['rule_id']==6 || $_SESSION['user']['id'] == 134 || $_SESSION['user']['rule_id'] == 2){?>
                                                     <option value="9">الخط الساخن</option>
                                                     <option value="10">الخط الساخن حسب  الخدمات</option>
                                                     
-                                                    <?php } if($_SESSION['user']['rule_id']==19 || $_SESSION['user']['rule_id']==6){?>
+                                                    <?php } if($_SESSION['user']['rule_id']==19 || $_SESSION['user']['rule_id']==6 || $_SESSION['user']['rule_id'] == 2){?>
                                                     
                                                     <option value="11"> المكاتب حسب  الخدمات</option>
                                                     <?php } ?>
