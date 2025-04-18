@@ -39,6 +39,7 @@ date_default_timezone_set('Asia/Aden');
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="dist/css/bootstrap-selects.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- end select with search  -->
   <!-- Fonts and icons -->
@@ -57,6 +58,7 @@ date_default_timezone_set('Asia/Aden');
       }
     });
   </script>
+  
 
 
   <!-- CSS Files -->

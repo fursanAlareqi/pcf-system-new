@@ -11,34 +11,170 @@ if (!in_array($_SESSION['user']['rule_id'], $allowed_rules)) {
     exit;
 }
 
-
-// --- Handle the lookup form at top (unchanged) ---
-if (isset($_POST['search'])) {
-    $code   = $_POST['code'];
-    $branch = $_SESSION['user']['branch_id'];
-    // ... your existing lookup code to display the table ...
+// sanitization function
+function test_input(string $data): string {
+    return htmlspecialchars(stripslashes(trim($data)), ENT_QUOTES, 'UTF-8');
 }
 
+$branch = $_SESSION['user']['branch_id'];
+
+// --------- Lookup dispensing history ----------
+
+
 ?>
-<div class="content">
-  <div class="page-inner">
-    <div class="row">
+	<div class="content">
+		<div class="page-inner">
+			<div class="row">
+				<div class="col-md-12">
+					<form action="" method="post">
+						<div class="card">
+							<div class="card-header">
+								<div class="card-title"> استعلام على العلاج الذي تم تحديدة للحالة</div>
+							</div>
+							<form action="" method="post">
+								<div class="card-body">
 
-      <!-- Lookup card omitted for brevity -->
 
-      <!-- Medicine dispatch card -->
+									<form action="" method="post">
+
+										<div class="row row-demo-grid">
+											<div class="form-group form-floating-label">
+
+												<label for="tokens">رقم الكود</label>
+												<select class="selectpicker form-control" name="code" id="tokens" data-live-search="true">
+													<option value=""></option>
+													<?php
+													// find branch
+													$branch = $_SESSION['user']['branch_id'];
+
+													//end find branch 
+													$sql = "SELECT DISTINCT d.code, r.name FROM doctor d INNER JOIN resption r ON d.code = r.code  WHERE d.branch = ?";
+													$stm = $con->prepare($sql);
+													$stm->execute(array($branch));
+													if ($stm->rowCount() > 0) {
+														foreach ($stm->fetchAll() as $row) {
+
+
+
+
+													?>
+															<option value="<?php echo $row['code']; ?>"><?php echo $row['code'] . ' - ' . $row['name']; ?></option>
+
+													<?php
+														}
+													}
+													?>
+
+												</select>
+											</div>
+										</div>
+
+
+
+										<input class="btn btn-success" type="submit" name="search" value="search">
+
+
+
+									</form>
+									<?php if (isset($_POST['search'])) {
+
+										$code = $_POST['code'];
+
+									?>
+
+										<div class="table-responsive">
+											<table id="multi-filter-select" class="table table-bordered table-head-bg-info table-bordered-bd-info mt-4">
+												<thead>
+													<tr>
+														<th> </th>
+														<th> رقم كود الحالة</th>
+														<th> اسم العلاج</th>
+														<th>الكمية</th>
+														<th> تاريخ الروشتة </th>
+													</tr>
+												</thead>
+												<tfoot>
+													<th> </th>
+													<th> رقم كود الحالة</th>
+													<th> اسم العلاج</th>
+													<th>الكمية</th>
+													<th> تاريخ الروشتة </th>
+												</tfoot>
+												<tbody>
+													<?php
+													$sql = "select * from psyshological where code =? and branch=? and Date(date)>=? ORDER BY `psyshological`.`date` desc  ";
+													$stmu = $con->prepare($sql);
+													$date = $branch == 5 ? date('Y-7-1') : date('Y-m-1');
+													$stmu->execute(array($code, $branch, $date));
+													$psyshological = $stmu->fetchAll();
+													foreach ($psyshological as $row) {
+													?>
+														<tr>
+															<td>الطبيب النفسي</td>
+															<td><?php echo $row['code']; ?></td>
+															<td>
+																<?php
+																$medical_explode = explode(",", $row['medical']);
+																foreach ($medical_explode as $medical_name) {
+																	echo $medical_name . '<br>';
+																}
+																?>
+															</td>
+															<td><?php echo $row['quantity']; ?></td>
+															<td><?php echo $row['date']; ?></td>
+														</tr>
+
+													<?php } ?>
+
+													<?php
+													$sql = "select * from doctor where code =? and branch=? and Date(date)>=? ORDER BY `doctor`.`date` desc  ";
+													$stm = $con->prepare($sql);
+													$date = $branch == 5 ? date('Y-7-1') : date('Y-m-1');
+													$stm->execute(array($code, $branch, $date));
+													$doctors = $stm->fetchAll();
+													foreach ($doctors as $row) {
+													?>
+														<tr>
+															<td>الطبيب العام</td>
+															<td><?php echo $row['code']; ?></td>
+															<td>
+																<?php $medical_explode = explode(",", $row['medical']);
+																foreach ($medical_explode as $medical_name) {
+																	echo $medical_name . '<br>';
+																}
+																?>
+															</td>
+															<td><?php echo $row['quantity']; ?></td>
+															<td><?php echo $row['date']; ?></td>
+														</tr>
+
+													<?php } ?>
+												</tbody>
+											</table>
+										</div>
+									<?php } ?>
+								</div>
+						</div>
+					</form>
+
+
+				</div>
+
+
+      <!-- 2) Medicine Dispatch Card -->
       <div class="col-md-12">
         <div class="card">
           <div class="card-header"><h4 class="card-title">صرف دواء</h4></div>
           <div class="card-body">
-            <!-- Step 1: Choose how many medicines -->
+            <!-- Step 1: Choose count -->
             <form method="post" class="mb-4">
               <div class="form-group">
                 <label>عدد الأدوية</label>
                 <select name="medicine_number" class="form-control" required>
                   <option value="">اختر عددًا</option>
                   <?php for ($i = 1; $i <= 10; $i++): ?>
-                    <option value="<?= $i ?>" <?= (isset($_POST['medicine_n']) && $_POST['medicine_number']==$i)?'selected':'' ?>>
+                    <option value="<?= $i ?>"
+                      <?= (isset($_POST['medicine_n']) && $_POST['medicine_number']==$i)?'selected':'' ?>>
                       <?= $i ?>
                     </option>
                   <?php endfor; ?>
@@ -48,11 +184,9 @@ if (isset($_POST['search'])) {
             </form>
 
             <?php if (isset($_POST['medicine_n'])):
-              // sanitize common inputs
-              function test_input($d){ return htmlspecialchars(stripslashes(trim($d))); }
-              $medicine_number = intval($_POST['medicine_number']);
+              $medicine_number = intval(test_input($_POST['medicine_number']));
             ?>
-              <!-- Step 2: Show dynamic fields -->
+              <!-- Step 2: Dynamic fields -->
               <form method="post">
                 <input type="hidden" name="medicine_number" value="<?= $medicine_number ?>">
 
@@ -62,10 +196,9 @@ if (isset($_POST['search'])) {
                 </div>
                 <div class="form-group">
                   <label>رقم الكود</label>
-                  <select name="code" class="form-control" data-live-search="true" required>
+                  <select name="code" class="form-control" required>
                     <option value=""></option>
                     <?php
-                    $branch = $_SESSION['user']['branch_id'];
                     $stm = $con->prepare("SELECT DISTINCT code FROM resption WHERE branch = ?");
                     $stm->execute([$branch]);
                     foreach ($stm->fetchAll() as $r): ?>
@@ -84,8 +217,16 @@ if (isset($_POST['search'])) {
                 <?php endif; ?>
 
                 <?php
-                // Preload all available medicines once
-                $meds = $con->query("SELECT id,name,type,residual,exporter FROM pharmacy WHERE branch = $branch AND residual > 0 AND date > '2022-12-31' ORDER BY name")->fetchAll();
+                // preload medicines
+                $meds = $con->prepare("
+                  SELECT id, exporter, name, type, residual 
+                  FROM pharmacy 
+                  WHERE branch = ? AND residual > 0 AND date > '2022-12-31' 
+                  ORDER BY name
+                ");
+                $meds->execute([$branch]);
+                $allMeds = $meds->fetchAll(PDO::FETCH_ASSOC);
+
                 for ($i = 1; $i <= $medicine_number; $i++): ?>
                   <div class="row">
                     <div class="col-md-8">
@@ -93,7 +234,7 @@ if (isset($_POST['search'])) {
                         <label>اسم العلاج <?= $i ?></label>
                         <select name="medicine_name_<?= $i ?>" class="form-control" required>
                           <option value=""></option>
-                          <?php foreach ($meds as $m): ?>
+                          <?php foreach ($allMeds as $m): ?>
                             <option value="<?= $m['id'] ?>" data-type="<?= $m['type']=='old'?'شريط':'حبة' ?>">
                               <?= "{$m['exporter']} & {$m['name']} ({$m['residual']})" ?>
                             </option>
@@ -116,91 +257,171 @@ if (isset($_POST['search'])) {
             <?php endif; ?>
 
             <?php
-            // Step 3: Handle the dynamic save
+            // Step 3: Handle save
             if (isset($_POST['save'])) {
-				function test_input($data)
-				{
-					$data = trim($data);
-					$data = stripslashes($data);
-					$data = htmlspecialchars($data);
-					return $data;
-				}
-                // sanitize basics
+                // inputs
                 $medicine_number = intval(test_input($_POST['medicine_number']));
                 $date            = test_input($_POST['date']);
                 $code            = test_input($_POST['code']);
-                $branch          = $_SESSION['user']['branch_id'];
                 $user            = $_SESSION['user']['id'];
                 $Epilepsy        = $branch == 6 ? test_input($_POST['Epilepsy']) : '';
 
-                // get last 'type' from resption
-                $stm = $con->prepare("SELECT type FROM resption WHERE code = ? AND branch = ? ORDER BY date DESC LIMIT 1");
-                $stm->execute([$code, $branch]);
-                $type = $stm->fetchColumn();
+                // basic validations
+                if (empty($date)) {
+					
+					echo '<script>swal("يرجى إدخال تاريخ الصرف", "لم يتم رفع البيانات", {
+						icon : "warning",
+						buttons: {        			
+							confirm: {
+								className : "btn btn-warning"
+							}
+						},
+					});</script>'; exit;
+                }
+                if (empty($code) || !is_numeric($code)) {
+                    echo '<script>swal("رقم الكود مطلوب ويجب أن يكون رقماً", "لم يتم رفع البيانات", {
+						icon : "warning",
+						buttons: {        			
+							confirm: {
+								className : "btn btn-warning"
+							}
+						},
+					});</script>'; exit;
+                }
+                // ensure there's a reception record
+                $checkRec = $con->prepare("
+                  SELECT 1 FROM resption 
+                  WHERE code = ? AND branch = ? AND DATE(date) = ?
+                ");
+                $checkRec->execute([$code, $branch, $date]);
+                if (!$checkRec->fetch()) {
+					echo '<script>swal("لم يتم تسجيل الحالة في الاستقبال بتاريخ الصرف", "لم يتم رفع البيانات", {
+						icon : "warning",
+						buttons: {        			
+							confirm: {
+								className : "btn btn-warning"
+							}
+						},
+					});</script>';exit;
+                }
 
-                // prepare arrays
+                // collect
                 $quantities      = [];
                 $residualUpdates = [];
+                $names           = [];
 
                 for ($i = 1; $i <= $medicine_number; $i++) {
                     $medId = test_input($_POST["medicine_name_$i"]);
-                    $qty   = intval(test_input($_POST["medicine_quantity_$i"]));
+                    $qty   = test_input($_POST["medicine_quantity_$i"]);
+
+                    if (empty($medId) || !is_numeric($medId)) {
+						echo '<script>swal("اختر الدواء رقم '.$i.'", "لم يتم رفع البيانات", {
+							icon : "warning",
+							buttons: {        			
+								confirm: {
+									className : "btn btn-warning"
+								}
+							},
+						});</script>'; exit;
+                    }
+                    if ($qty === "" || !is_numeric($qty) || $qty < 1) {
+						echo '<script>swal("أدخل كمية صحيحة للدواء رقم '.$i.'", "لم يتم رفع البيانات", {
+							icon : "warning",
+							buttons: {        			
+								confirm: {
+									className : "btn btn-warning"
+								}
+							},
+						});</script>'; exit;
+                    }
+                    if (in_array($medId, $names)) {
+						echo '<script>swal("لا يمكن تكرار نفس الدواء مرتين", "لم يتم رفع البيانات", {
+							icon : "warning",
+							buttons: {        			
+								confirm: {
+									className : "btn btn-warning"
+								}
+							},
+						});</script>'; exit;
+                    }
+                    $names[] = $medId;
 
                     // fetch pharmacy info
                     $stm = $con->prepare("SELECT name,type,residual FROM pharmacy WHERE id = ?");
                     $stm->execute([$medId]);
                     $info = $stm->fetch(PDO::FETCH_ASSOC);
 
-                    $unit = $info['type'] === 'old' ? 'شريط' : 'حبة';
-                    $quantities[] = "{$info['name']} {$qty} ({$unit})";
+                    if ($qty > $info['residual']) {
+						echo '<script>swal("الكمية للدواء '.$info['name'].' أكبر من المخزون", "لم يتم رفع البيانات", {
+							icon : "warning",
+							buttons: {        			
+								confirm: {
+									className : "btn btn-warning"
+								}
+							},
+						});</script>'; exit;
+                    }
 
-                    $residualNew = $info['residual'] - $qty;
-                    $residualUpdates[] = ['id'=>$medId,'residual'=>$residualNew];
+                    $unit = $info['type']==='old'?'شريط':'حبة';
+                    $quantities[]      = "{$info['name']} {$qty} ({$unit})";
+                    $residualUpdates[] = ['id'=>$medId,'residual'=>$info['residual']-$qty];
                 }
 
+                // check duplicate same day
+                $dup = $con->prepare("
+                  SELECT 1 FROM pure_pharmacy 
+                  WHERE code=? AND branch=? AND date=?
+                ");
+                $dup->execute([$code, $branch, $date]);
+                if ($dup->fetch()) {
+					echo '<script>swal("لقد صرفت دواءً لهذه الحالة اليوم بالفعل", "لم يتم رفع البيانات", {
+						icon : "warning",
+						buttons: {        			
+							confirm: {
+								className : "btn btn-warning"
+							}
+						},
+					});</script>';exit;
+                }
+
+                // get type from last resption
+                $stm = $con->prepare("
+                  SELECT type FROM resption 
+                  WHERE code=? AND branch=? ORDER BY date DESC LIMIT 1
+                ");
+                $stm->execute([$code,$branch]);
+                $type = $stm->fetchColumn();
+
+                // insert
                 $quantity_name = implode(',', $quantities);
+                $ins = $con->prepare("
+                  INSERT INTO pure_pharmacy
+                    (branch,name,code,date,quantity,sender_name,type,Epilepsy)
+                  VALUES (?,?,?,?,?,?,?,?)
+                ");
+                $ins->execute([
+                    $branch, $quantity_name, $code, $date,
+                    $quantity_name, $user, $type, $Epilepsy
+                ]);
 
-                // prevent duplicate same day
-                $check = $con->prepare("SELECT 1 FROM pure_pharmacy WHERE date = ? AND code = ? AND branch = ?");
-                $check->execute([$date, $code, $branch]);
-                if ($check->fetch()) {
-                    echo '<script>swal("لا يمكن صرف العلاج مرتين في نفس اليوم لنفس الحالة","", "warning");</script>';
-                } else {
-                    // insert
-                    $ins = $con->prepare("
-                      INSERT INTO pure_pharmacy
-                        (branch,name,code,date,quantity,sender_name,type,Epilepsy)
-                      VALUES (?,?,?,?,?,?,?,?)
-                    ");
-                    $ins->execute([
-                        $branch,
-                        $quantity_name,
-                        $code,
-                        $date,
-                        $quantity_name,
-                        $user,
-                        $type,
-                        $Epilepsy
-                    ]);
-
-                    if ($ins->rowCount()) {
-                        // update pharmacy residuals
-                        $upd = $con->prepare("UPDATE pharmacy SET residual = ? WHERE id = ?");
-                        foreach ($residualUpdates as $u) {
-                            $upd->execute([$u['residual'], $u['id']]);
-                        }
-                        echo '<script src="js/send_success.js"></script>';
-                    } else {
-                        echo '<script src="js/send_error.js"></script>';
+                if ($ins->rowCount()) {
+                    // update residuals
+                    $upd = $con->prepare("UPDATE pharmacy SET residual=? WHERE id=?");
+                    foreach ($residualUpdates as $u) {
+                        $upd->execute([$u['residual'],$u['id']]);
                     }
+                    echo '<script src="js/send_success.js"></script>';
+                } else {
+                    echo '<script src="js/send_error.js"></script>';
                 }
             }
             ?>
           </div>
         </div>
-      </div><!-- end col -->
-    </div><!-- end row -->
-  </div><!-- end page-inner -->
-</div><!-- end content -->
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <?php include "include/footer.php"; ?>
