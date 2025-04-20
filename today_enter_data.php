@@ -96,7 +96,7 @@ if ($_SESSION['user']['rule_id'] == 11 || $_SESSION['user']['rule_id'] == 2 || $
 									$user = $_SESSION['user']['id'];
 									if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6) {
 
-									$sql = "SELECT * FROM pure_pharmacy where date BETWEEN ? and ?  ";
+									$sql = "SELECT * FROM pure_pharmacy where date BETWEEN ? and ? ORDER BY branch ";
 									$stmu = $con->prepare($sql);
 									$stmu->execute(array($from_date, $to_date));
 									}
