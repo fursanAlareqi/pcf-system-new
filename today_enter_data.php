@@ -25,36 +25,44 @@ if ($_SESSION['user']['rule_id'] == 11 || $_SESSION['user']['rule_id'] == 2 || $
 							<div class="card-body">
 								<?php
 
-								if (isset($_GET['action'], $_GET['ids']) && $_GET['action'] == 'delete') {
-									$id = $_GET['ids'];
-									$sql = "delete from resption where id=? ";
-									$stm = $con->prepare($sql);
-									$stm->execute(array($id));
-									if ($stm->rowCount() > 0) {
-										echo "<div class='alert alert-success'>One Row  Deleted</div>";
-										echo "<script>
-												window.open('admin_search_reception_code.php','_self')
-											</script>";
-									} else {
-										echo "<div class='alert alert-danger'>One Row Not Deleted</div>";
-									}
-								}
+								// if (isset($_GET['action'], $_GET['ids']) && $_GET['action'] == 'delete') {
+								// 	$id = $_GET['ids'];
+								// 	$sql = "delete from resption where id=? ";
+								// 	$stm = $con->prepare($sql);
+								// 	$stm->execute(array($id));
+								// 	if ($stm->rowCount() > 0) {
+								// 		echo "<div class='alert alert-success'>One Row  Deleted</div>";
+								// 		echo "<script>
+								// 				window.open('admin_search_reception_code.php','_self')
+								// 			</script>";
+								// 	} else {
+								// 		echo "<div class='alert alert-danger'>One Row Not Deleted</div>";
+								// 	}
+								// }
 								?>
 
 
 								<form action="" method="post">
+									<div class='row'>
+										<div class="col-md-6 col-lg-6">
 
-									<div class="col-md-6 col-lg-4">
 
-										<div class="form-group form-floating-label">
-											<label>من تاريخ</label>
-											<input type="date" class="form-control input-border-bottom" id="inputFloatingLabel" name="from_date">
+
+											<div class="form-group form-floating-label">
+												<label>من تاريخ</label>
+												<input type="date" class="form-control input-border-bottom" id="inputFloatingLabel" name="from_date">
+											</div>
+
+
 										</div>
-										<div class="form-group form-floating-label">
-											<label>الى تاريخ</label>
-											<input type="date" class="form-control input-border-bottom" id="inputFloatingLabel" name="to_date">
-										</div>
+										<div class="col-md-6 col-lg-6">
 
+											<div class="form-group form-floating-label">
+												<label>الى تاريخ</label>
+												<input type="date" class="form-control input-border-bottom" id="inputFloatingLabel" name="to_date">
+											</div>
+
+										</div>
 									</div>
 
 									<div class="card-action">
@@ -86,9 +94,17 @@ if ($_SESSION['user']['rule_id'] == 11 || $_SESSION['user']['rule_id'] == 2 || $
 
 									$date = date('Y-m-d');
 									$user = $_SESSION['user']['id'];
-									$sql = "SELECT * FROM pure_pharmacy where date BETWEEN ? and ?  and  branch=? ";
+									if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6) {
+
+									$sql = "SELECT * FROM pure_pharmacy where date BETWEEN ? and ?  ";
 									$stmu = $con->prepare($sql);
-									$stmu->execute(array($from_date, $to_date, $branch));
+									$stmu->execute(array($from_date, $to_date));
+									}
+									else{
+										$sql = "SELECT * FROM pure_pharmacy where date BETWEEN ? and ?  and  branch=? ";
+										$stmu = $con->prepare($sql);
+										$stmu->execute(array($from_date, $to_date, $branch));
+									}
 									//عدد الحالات الكلية
 									if ($stmu->rowCount() > 0) {
 
