@@ -196,8 +196,8 @@ $branch = $_SESSION['user']['branch_id'];
                 </div>
                 <div class="form-group">
                   <label>رقم الكود</label>
-                  <select name="code" class="form-control" required>
-                    <option value=""></option>
+                  <select class="selectpicker form-control" name="code" id="tokens" data-live-search="true">
+                  <option value=""></option>
                     <?php
                     $stm = $con->prepare("SELECT DISTINCT code FROM resption WHERE branch = ?");
                     $stm->execute([$branch]);
