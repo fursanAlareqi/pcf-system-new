@@ -5,8 +5,8 @@ if(!isset($_SESSION['user'])){
 	
 	echo "<script> window.open('logout.php','_self')</script>";
  // header("location:login.php");
- }if($_SESSION['user']['rule_id']==3||$_SESSION['user']['rule_id']==2 ||$_SESSION['user']['rule_id']==6||$_SESSION['user']['rule_id']==18){
-?>
+}if($_SESSION['user']['rule_id']==22||$_SESSION['user']['rule_id']==2 ||$_SESSION['user']['rule_id']==6){
+	?>
 
 
 		

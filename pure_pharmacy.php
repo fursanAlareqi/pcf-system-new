@@ -232,7 +232,7 @@ $branch = $_SESSION['user']['branch_id'];
                     <div class="col-md-8">
                       <div class="form-group">
                         <label>اسم العلاج <?= $i ?></label>
-                        <select name="medicine_name_<?= $i ?>" class="form-control" required>
+                        <select name="medicine_name_<?= $i ?>" class="selectpicker form-control" data-live-search="true" required>
                           <option value=""></option>
                           <?php foreach ($allMeds as $m): ?>
                             <option value="<?= $m['id'] ?>" data-type="<?= $m['type']=='old'?'شريط':'حبة' ?>">
