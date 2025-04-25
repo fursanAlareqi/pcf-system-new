@@ -153,26 +153,26 @@ if (!isset($_SESSION['user'])) {
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-
-							<div class="card-body">
-								<div class="row">
 									<div class="col-sm-6 col-md-3">
-										<div class="card card-stats card-success card-round">
-											<div class="card-body ">
+										<div class="card card-stats  card-round">
+											<div class="card-body">
 												<div class="row">
 													<div class="col-5">
-														<div class="icon-big text-center">
-															<i class="flaticon-interface-6"></i>
+														<div class="icon-big text-center icon-danger bubble-shadow-small">
+															<i class="flaticon-users"></i>
 														</div>
 													</div>
 													<div class="col-7 col-stats">
 														<div class="numbers">
-															<p class="card-category">Reception IBB</p>
-															<h4 class="card-title" id="div_refresh_ab">
-																<h1></h1>
-
+															<p class="card-category"> cases in Aden</p>
+															<h4 class="card-title">
+																<?php
+																$sql = "select count(DISTINCT(code)) as num from resption where branch=? ";
+																$stm = $con->prepare($sql);
+																$stm->execute(array("8"));
+																$num = $stm->fetch();
+																echo $num['num'];
+																?>
 															</h4>
 														</div>
 													</div>
@@ -180,6 +180,39 @@ if (!isset($_SESSION['user'])) {
 											</div>
 										</div>
 									</div>
+									<div class="col-sm-6 col-md-3">
+										<div class="card card-stats  card-round">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-5">
+														<div class="icon-big text-center icon-secondary bubble-shadow-small">
+															<i class="flaticon-users"></i>
+														</div>
+													</div>
+													<div class="col-7 col-stats">
+														<div class="numbers">
+															<p class="card-category"> cases in sanaa</p>
+															<h4 class="card-title">
+																<?php
+																$sql = "select count(DISTINCT(code)) as num from sana  ";
+																$stm = $con->prepare($sql);
+																$stm->execute();
+																$num = $stm->fetch();
+																echo $num['num'];
+																?>
+															</h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="card-body">
+								<div class="row">
+									
 									<div class="col-sm-6 col-md-3">
 										<div class="card card-stats card-success card-round">
 											<div class="card-body ">
@@ -192,31 +225,7 @@ if (!isset($_SESSION['user'])) {
 													<div class="col-7 col-stats">
 														<div class="numbers">
 															<p class="card-category">Reception TAIZ</p>
-															<h4 class="card-title" id="div_refresh_taiz">
-
-															</h4>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-									<div class="col-sm-6 col-md-3">
-										<div class="card card-stats card-secondary card-round">
-											<div class="card-body ">
-												<div class="row">
-													<div class="col-5">
-														<div class="icon-big text-center">
-															<i class="flaticon-chat-8"></i>
-														</div>
-													</div>
-													<div class="col-7 col-stats">
-														<div class="numbers">
-															<p class="card-category">Psyshological IBB</p>
-															<h4 class="card-title" id="div_refresh_psyshological_ab">
-																<h1></h1>
+															<h4 class="card-title" id="div_refresh_resption_taiz">
 
 															</h4>
 														</div>
@@ -236,7 +245,7 @@ if (!isset($_SESSION['user'])) {
 													</div>
 													<div class="col-7 col-stats">
 														<div class="numbers">
-															<p class="card-category">Psyshological TAIZ</p>
+															<p class="card-category">Psychiatrist TAIZ</p>
 															<h4 class="card-title" id="div_refresh_psyshological_taiz">
 
 															</h4>
@@ -246,15 +255,6 @@ if (!isset($_SESSION['user'])) {
 											</div>
 										</div>
 									</div>
-
-
-								</div>
-							</div>
-
-							<div class="card-body">
-								<div class="row">
-
-
 									<div class="col-sm-6 col-md-3">
 										<div class="card card-stats card-info card-round">
 											<div class="card-body ">
@@ -266,31 +266,9 @@ if (!isset($_SESSION['user'])) {
 													</div>
 													<div class="col-7 col-stats">
 														<div class="numbers">
-															<p class="card-category">Doctor TAIZ</p>
-															<h4 class="card-title" id="">
-																39
-															</h4>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-6 col-md-3">
-										<div class="card card-stats card-primary card-round">
-											<div class="card-body ">
-												<div class="row align-items-center">
-													<div class="col-5">
-														<div class="icon-big text-center ">
-															<i class="flaticon-agenda-1"></i>
-														</div>
-													</div>
-													<div class="col-7 col-stats">
-														<div class="numbers">
-															<p class="card-category">Case Management IBB</p>
-															<h4 class="card-title" id="div_refresh_Case_stude_ab">
-																<h1></h1>
-
+															<p class="card-category">General Practitioner TAIZ</p>
+															<h4 class="card-title" id="div_refresh_doctor_taiz">
+																
 															</h4>
 														</div>
 													</div>
@@ -310,9 +288,230 @@ if (!isset($_SESSION['user'])) {
 													<div class="col-7 col-stats">
 														<div class="numbers">
 															<p class="card-category">Case Management TAIZ</p>
-															<h4 class="card-title" id="div_refresh_Case_stude_taiz">
+															<h4 class="card-title" id="div_refresh_case_stude_taiz">
 
 															</h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									
+
+									
+
+
+									
+
+
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-6 col-md-3">
+										<div class="card card-stats card-success card-round">
+											<div class="card-body ">
+												<div class="row">
+													<div class="col-5">
+														<div class="icon-big text-center">
+															<i class="flaticon-interface-6"></i>
+														</div>
+													</div>
+													<div class="col-7 col-stats">
+														<div class="numbers">
+															<p class="card-category">Reception IBB</p>
+															<h4 class="card-title" id="div_refresh_resption_ab">
+																<h1></h1>
+
+															</h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3">
+										<div class="card card-stats card-secondary card-round">
+											<div class="card-body ">
+												<div class="row">
+													<div class="col-5">
+														<div class="icon-big text-center">
+															<i class="flaticon-chat-8"></i>
+														</div>
+													</div>
+													<div class="col-7 col-stats">
+														<div class="numbers">
+															<p class="card-category">Psychiatrist IBB</p>
+															<h4 class="card-title" id="div_refresh_psyshological_ab">
+																<h1></h1>
+
+															</h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									
+									<div class="col-sm-6 col-md-3">
+										<div class="card card-stats card-info card-round">
+											<div class="card-body ">
+												<div class="row">
+													<div class="col-5">
+														<div class="icon-big text-center">
+															<i class="fas fa-user-md"></i>
+														</div>
+													</div>
+													<div class="col-7 col-stats">
+														<div class="numbers">
+															<p class="card-category">General Practitioner Ab</p>
+															<h4 class="card-title" id="div_refresh_doctor_ab">
+																
+															</h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3">
+										<div class="card card-stats card-primary card-round">
+											<div class="card-body ">
+												<div class="row align-items-center">
+													<div class="col-5">
+														<div class="icon-big text-center ">
+															<i class="flaticon-agenda-1"></i>
+														</div>
+													</div>
+													<div class="col-7 col-stats">
+														<div class="numbers">
+															<p class="card-category">Case Management IBB</p>
+															<h4 class="card-title" id="div_refresh_case_stude_ab">
+																<h1></h1>
+
+															</h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-6 col-md-3">
+										<div class="card card-stats card-success card-round">
+											<div class="card-body ">
+												<div class="row">
+													<div class="col-5">
+														<div class="icon-big text-center">
+															<i class="flaticon-interface-6"></i>
+														</div>
+													</div>
+													<div class="col-7 col-stats">
+														<div class="numbers">
+															<p class="card-category">Reception Aden</p>
+															<h4 class="card-title" id="div_refresh_resption_aden">
+
+															</h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-sm-6 col-md-3">
+										<div class="card card-stats card-secondary card-round">
+											<div class="card-body ">
+												<div class="row">
+													<div class="col-5">
+														<div class="icon-big text-center">
+															<i class="flaticon-chat-8"></i>
+														</div>
+													</div>
+													<div class="col-7 col-stats">
+														<div class="numbers">
+															<p class="card-category">Psychiatrist Aden</p>
+															<h4 class="card-title" id="div_refresh_psyshological_aden">
+
+															</h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-6 col-md-3">
+										<div class="card card-stats card-info card-round">
+											<div class="card-body ">
+												<div class="row">
+													<div class="col-5">
+														<div class="icon-big text-center">
+															<i class="fas fa-user-md"></i>
+														</div>
+													</div>
+													<div class="col-7 col-stats">
+														<div class="numbers">
+															<p class="card-category">General Practitioner Aden</p>
+															<h4 class="card-title" id="div_refresh_doctor_aden">
+																
+															</h4>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3">
+												<div class="card card-stats card-primary card-round">
+													<div class="card-body ">
+														<div class="row">
+															<div class="col-5">
+																<div class="icon-big text-center">
+																	<i class="flaticon-agenda-1"></i>
+																</div>
+															</div>
+															<div class="col-7 col-stats">
+																<div class="numbers">
+																	<p class="card-category">Case Management Aden</p>
+																	<h4 class="card-title" id="div_refresh_case_stude_aden">
+
+																	</h4>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+									<div class="card-body">
+										<div class="row">
+											
+											
+											
+											<div class="col-sm-6 col-md-3">
+												<div class="card card-stats card-success card-round">
+													<div class="card-body ">
+														<div class="row">
+															<div class="col-5">
+																<div class="icon-big text-center">
+																	<i class="flaticon-interface-6"></i>
+																</div>
+															</div>
+															<div class="col-7 col-stats">
+																<div class="numbers">
+																	<p class="card-category">Reception Sanaa</p>
+																	<h4 class="card-title" id="div_refresh_sanaa">
+
+																	</h4>
+																</div>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -444,14 +643,14 @@ if (!isset($_SESSION['user'])) {
 
 <!-- refresh_bag.js -->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="js/refresh_resption_taiz.js"></script>
-<script src="js/refresh_resption_ab.js"></script>
-<script src="js/refresh_resption_Doctor_taiz.js"></script>
-<script src="js/refresh_resption_Doctor_ab.js"></script>
-<script src="js/refresh_resption_psyshological_taiz.js"></script>
-<script src="js/refresh_resption_psyshological_ab.js"></script>
-<script src="js/refresh_resption_Case_stude_taiz.js"></script>
-<script src="js/refresh_resption_Case_stude_ab.js"></script>
+<script src="js/refresh_resption_sanaa.js"></script>
+
+
+
+
+<script src="js/refresh_cards.js"></script>
+
+
 <!-- end refresh_bag.js -->
 <!--   Core JS Files   -->
 <?php
