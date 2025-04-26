@@ -147,11 +147,9 @@ if($stmu->rowCount()>0){
                                         <a href="sana_edit.php?action=edit&ids=<?php echo $row['id'] ?>" >  
                                             تعديل
                                         </a>
-                                        <?php if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6){ ?>
                                             <a href="sana_edit_all.php?action=edit&ids=<?php echo $row['id'] ?>" >  
                                                 تعديل كل الادخالات
                                             </a>
-                                        <?php } ?>
                                     </td>
                                     
                             </tr>
