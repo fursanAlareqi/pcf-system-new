@@ -147,6 +147,9 @@ if($stmu->rowCount()>0){
                                         <a href="sana_edit.php?action=edit&ids=<?php echo $row['id'] ?>" >  
                                             تعديل
                                         </a>
+                                            <a href="sana_edit_all.php?action=edit&ids=<?php echo $row['id'] ?>" >  
+                                                تعديل كل الادخالات
+                                            </a>
                                     </td>
                                     
                             </tr>

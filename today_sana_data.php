@@ -139,6 +139,10 @@ if ($_SESSION['user']['rule_id'] == 23 || $_SESSION['user']['rule_id'] == 22 || 
                                                                     <a href="sana_edit.php?action=edit&ids=<?php echo $row['id'] ?>" >  
                                                                         تعديل
                                                                     </a>
+																	<a href="sana_edit_all.php?action=edit&ids=<?php echo $row['id'] ?>" >  
+                                                                        تعديل كل الادخالات
+                                                                    </a>
+
 													            </td>
 																<?php
 															deleteAction($row['id']) ?>
