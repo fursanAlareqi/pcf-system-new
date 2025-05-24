@@ -83,6 +83,18 @@ if (
 
 									</div>
 									<div class="col-md-6 col-lg-4">
+										<div class="form-group form-floating-label">
+
+											<label>وسيلة استقبال الشكوى </label>
+											<select class="selectpicker form-control"  name="complaint_receipt_method" data-live-search="true">
+												<option value=""></option>
+
+												<option>عبر الخط الساخن </option>
+												<option>عبر ايميل الشكاوى</option>
+												<option>عبر صندوق الشكاوى</option>
+
+											</select>
+										</div>
 
 										<div class="form-group form-floating-label">
 
@@ -174,6 +186,7 @@ if (
 
 		$name = test_input($_POST["name"]);
 		$date = test_input($_POST["date"]);
+		$complaint_receipt_method = test_input($_POST["complaint_receipt_method"]);
 
 
 
@@ -276,11 +289,11 @@ if (
 					});</script>';
 			} else {
 				$query = "INSERT INTO complaints(
-				name,date,complaint_number,phone_number,content,action,process,center,type,health_facility,sender_name)
-					values (?,?,?,?,?,?,?,?,?,?,?) ";
+				name,date,complaint_number,phone_number,content,action,process,center,type,health_facility,sender_name,complaint_receipt_method)
+					values (?,?,?,?,?,?,?,?,?,?,?,?) ";
 				$stm = $con->prepare($query);
 				$stm->execute(array(
-					$name, $date, $complaint_number, $phone_number, $content, $action, $process, $center, $type, $health_facility, $user
+					$name, $date, $complaint_number, $phone_number, $content, $action, $process, $center, $type, $health_facility, $user, $complaint_receipt_method
 				));
 				if ($stm->rowCount()) {
 					echo '<script src="js/send_success.js"></script>';

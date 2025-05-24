@@ -2222,6 +2222,14 @@ date_default_timezone_set('Asia/Aden');
               </li>
             <?php } ?>
 
+            <?php if ($_SESSION['user']['rule_id'] == 16 || $_SESSION['user']['rule_id'] == 26 || $_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6) { ?>
+              <li <?php if ($num == 4 && $id == 500) echo 'class="active"' ?>>
+                <a href="complaint_report_by_date.php?num=4&id=500">
+                  <span class="sub-item">تقرير الشكاوى حسب التاريخ</span>
+                </a>
+              </li>
+            <?php } ?>
+
 
           </ul>
         </div>
