@@ -85,6 +85,18 @@ if (
 
 																		</div>
 																		<div class="col-md-6 col-lg-4">
+																			<div class="form-group form-floating-label">
+
+																				<label>وسيلة استقبال الشكوى </label>
+																				<select class="selectpicker form-control"  value="<?php echo $row['complaint_receipt_method']; ?>"  name="complaint_receipt_method" data-live-search="true">
+																					<option value=""></option>
+
+																					<option <?php if ($row['complaint_receipt_method'] == "عبر الخط الساخن") echo "selected" ?> >عبر الخط الساخن </option>
+																					<option <?php if ($row['complaint_receipt_method'] == "عبر ايميل الشكاوى") echo "selected" ?> >عبر ايميل الشكاوى</option>
+																					<option <?php if ($row['complaint_receipt_method'] == "عبر صندوق الشكاوى") echo "selected" ?> >عبر صندوق الشكاوى</option>
+
+																				</select>
+																			</div>
 
 																			<div class="form-group form-floating-label">
 
@@ -191,6 +203,8 @@ if (
 
 									$name = test_input($_POST["name"]);
 									$date = test_input($_POST["date"]);
+									$complaint_receipt_method = test_input($_POST["complaint_receipt_method"]);
+
 									// $complaint_number = test_input($_POST["complaint_number"]);
 									$phone_number = test_input($_POST["phone_number"]);
 
@@ -248,10 +262,10 @@ if (
 
 									//اذا لايوجد اي مشكلة يقوم بارسال الملف
 									else {
-										$query = "UPDATE complaints set name=?,date=?,phone_number=?,content=?,action=?,process=?,center=?,type=?,health_facility=?,sender_name=? where id=? ";
+										$query = "UPDATE complaints set name=?,date=?,phone_number=?,content=?,action=?,process=?,center=?,type=?,health_facility=?,sender_name=?,complaint_receipt_method=? where id=? ";
 										$_stm = $con->prepare($query);
 										$_stm->execute(array(
-											$name, $date, $phone_number, $content, $action, $process, $center, $type, $health_facility, $user, $id
+											$name, $date, $phone_number, $content, $action, $process, $center, $type, $health_facility, $user,$complaint_receipt_method, $id
 										));
 
 										if ($_stm->rowCount()) {
