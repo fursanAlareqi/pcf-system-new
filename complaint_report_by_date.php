@@ -28,16 +28,16 @@ if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6) {
 
                                     <div class="col-md-6 ">
                                         <div class="form-group form-floating-label">
-                                            <label>الاسم</label>
-                                            <input type="text" class="form-control input-border-bottom" id="inputFloatingLabel" name="name">
+                                            <label>من تاريخ</label>
+                                            <input type="date" class="form-control input-border-bottom" id="inputFloatingLabel" name="from_date">
                                         </div>
                                     </div>
 
 
                                     <div class="col-md-6">
                                         <div class="form-group form-floating-label">
-                                            <label>التاريخ</label>
-                                            <input type="date" class="form-control input-border-bottom" id="inputFloatingLabel" name="date">
+                                            <label>الى تاريخ</label>
+                                            <input type="date" class="form-control input-border-bottom" id="inputFloatingLabel" name="to_date">
                                         </div>
                                     </div>
 
@@ -59,17 +59,17 @@ if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6) {
                         return $data;
                     }
 
-                    $date = test_input($_POST['date']);
-                    $name = test_input($_POST['name']);
+                    $from_date = test_input($_POST['from_date']);
+                    $to_date = test_input($_POST['to_date']);
 
 
 
 
 
                     $user = $_SESSION['user']['id'];
-                    $sql = "SELECT * FROM complaints where  date=? and name = ? ";
+                    $sql = "SELECT * FROM complaints where  date BETWEEN ? and ? ";
                     $stmu = $con->prepare($sql);
-                    $stmu->execute(array($date, $name));
+                    $stmu->execute(array($from_date, $to_date));
 
                     if ($stmu->rowCount() > 0) {
                 ?>
@@ -97,8 +97,8 @@ if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6) {
                                         <th>اسم مقدم الشكوى</th>
                                         <th>رقم تلفون مقدم الشكوى</th>
                                         <th> وسيلة استقبال الشكوى</th>
-
                                         <th>محتوى الشكوى</th>
+
                                         <th>المركز</th>
                                         <th>نوع الشكوى</th>
                                         <th>الاجراء الذي تم</th>
@@ -115,8 +115,8 @@ if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6) {
                                     <th>اسم مقدم الشكوى</th>
                                     <th>رقم تلفون مقدم الشكوى</th>
                                     <th> وسيلة استقبال الشكوى</th>
-
                                     <th>محتوى الشكوى</th>
+
                                     <th>المركز</th>
                                     <th>نوع الشكوى</th>
                                     <th>الاجراء الذي تم</th>
@@ -139,7 +139,6 @@ if ($_SESSION['user']['rule_id'] == 2 || $_SESSION['user']['rule_id'] == 6) {
                                                 <td><?php echo $row['phone_number']; ?></td>
                                                 <td><?php echo $row['complaint_receipt_method']; ?></td>
                                                 <td><?php echo $row['content']; ?></td>
-
                                                 <td><?php echo $row['center']; ?></td>
                                                 <td><?php echo $row['type']; ?></td>
                                                 <td><?php echo $row['action']; ?></td>

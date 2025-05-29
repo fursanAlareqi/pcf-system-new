@@ -61,6 +61,8 @@ if (
 													<th>رقم الشكوى</th>
 													<th>اسم مقدم الشكوى</th>
 													<th>رقم تلفون مقدم الشكوى</th>
+													<th> وسيلة استقبال الشكوى</th>
+													<th>محتوى الشكوى</th>
 													<th>المركز</th>
 													<th>نوع الشكوى</th>
 													<th>الاجراء الذي تم</th>
@@ -81,6 +83,8 @@ if (
 												<th>رقم الشكوى</th>
 												<th>اسم مقدم الشكوى</th>
 												<th>رقم تلفون مقدم الشكوى</th>
+												<th> وسيلة استقبال الشكوى</th>
+												<th>محتوى الشكوى</th>
 												<th>المركز</th>
 												<th>نوع الشكوى</th>
 												<th>الاجراء الذي تم</th>
@@ -98,10 +102,12 @@ if (
 
 															<td><?php echo $row['id']; ?></td>
 															<td><?php echo $row['date']; ?></td>
-															<td><?php echo $row['heath_facility']; ?></td>
+															<td><?php echo $row['health_facility']; ?></td>
 															<td><?php echo $row['complaint_number']; ?></td>
 															<td><?php echo $row['name']; ?></td>
 															<td><?php echo $row['phone_number']; ?></td>
+															<td><?php echo $row['complaint_receipt_method']; ?></td>
+															 <td><?php echo $row['content']; ?></td>
 															<td><?php echo $row['center']; ?></td>
 															<td><?php echo $row['type']; ?></td>
 															<td><?php echo $row['action']; ?></td>
