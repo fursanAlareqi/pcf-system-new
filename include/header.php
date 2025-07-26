@@ -1951,7 +1951,7 @@ date_default_timezone_set('Asia/Aden');
         </a>
         <div class="collapse <?php if ($id == 15) echo 'show' ?>" id="pharmacy">
           <ul class="nav nav-collapse">
-            <?php if ($_SESSION['user']['id'] != 61 && $_SESSION['user']['branch_id'] == 6) { ?>
+            
 
               <li <?php if ($num == 8 && $id == 15) echo 'class="active"' ?>>
                 <a href="search_pharmacy_code.php?num=8&id=15">
@@ -1961,7 +1961,7 @@ date_default_timezone_set('Asia/Aden');
                 </a>
               </li>
 
-            <?php } ?>
+            
             <?php if ($_SESSION['user']['id'] != 61) { ?>
               <li <?php if ($num == 5 && $id == 15) echo 'class="active"' ?>>
                 <a href="today_enter_data.php?num=5&id=15">
