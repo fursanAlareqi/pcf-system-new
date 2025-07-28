@@ -82,6 +82,7 @@ if(!isset($_SESSION['user'])){
 											
 									
 									?>
+									<?php if (($_SESSION['user']['id'] != 61 && $_SESSION['user']['branch_id'] == 6)) { ?>
 									<div class="table-responsive">
 									    <hr>
 									    <h1>بيانات الاستقبال</h1>
@@ -204,6 +205,7 @@ if(!isset($_SESSION['user'])){
 										</table>
 									
 									</div>
+									<?php } ?>
 									<div class="table-responsive">
 									    <hr>
 									    <h1>بيانات الصرف</h1>
