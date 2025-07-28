@@ -1514,6 +1514,12 @@ date_default_timezone_set('Asia/Aden');
 
                   </a>
                 </li>
+                
+              <li <?php if ($num == 12 && $id == 7) echo 'class="active"' ?>>
+                <a href="session_rebort.php?num=12&id=7">
+                  <span class="sub-item">       تقرير جلسات التوعيه</span>
+                </a>
+              </li>
 
               <?php } ?>
 
